@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="/ajb2DGameFramework/bin" sourcepath="/ajb2DGameFramework"/>
+	<classpathentry kind="lib" path="/Procedural2DPixelAssetsFactory/bin"/>
+	<classpathentry kind="lib" path="/ajbRandom/bin"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
