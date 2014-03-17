@@ -1,0 +1,2 @@
+Procedural2dPixelAssetsManager
+==============================
