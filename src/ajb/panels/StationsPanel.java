@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import enums.AssetSize;
 import ajb.app.App;
 import ajb.domain.Asset;
 import ajb.domain.Pixel;
@@ -50,7 +51,7 @@ public class StationsPanel extends Base2DFramework implements ActionListener {
 		
 		for (int i = 0; i < amount; i++) {
 
-			Pixel[][] grid = factory.create();
+			Pixel[][] grid = factory.create(AssetSize.RANDOM);
 
 			Asset asset = new Asset(null, AssetType.VESSEL, grid, primaryColor, Color.decode(ColorUtils.getRandomColour()));
 
