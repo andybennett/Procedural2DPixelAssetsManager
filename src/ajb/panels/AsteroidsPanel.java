@@ -2,7 +2,6 @@ package ajb.panels;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -13,15 +12,14 @@ import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 
-import enums.AssetSize;
 import ajb.app.App;
 import ajb.domain.Asset;
 import ajb.domain.Pixel;
+import ajb.enums.AssetSize;
 import ajb.enums.AssetType;
 import ajb.factory.AsteroidGeneratorFactory;
 import ajb.framework.Base2DFramework;
