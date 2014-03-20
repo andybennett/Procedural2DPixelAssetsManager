@@ -5,5 +5,6 @@
 	<classpathentry kind="lib" path="/ajb2DGameFramework/bin" sourcepath="/ajb2DGameFramework"/>
 	<classpathentry kind="lib" path="/Procedural2DPixelAssetsFactory/bin"/>
 	<classpathentry kind="lib" path="/ajbRandom/bin"/>
+	<classpathentry kind="lib" path="lib/xstream-1.4.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -8,11 +8,15 @@ import java.util.UUID;
 import ajb.enums.AssetType;
 import ajb.utils.ImageUtils;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 public class Asset {
 
 	private AssetType type;
 	
+	@XStreamOmitField
 	private BufferedImage img;
+	@XStreamOmitField
 	private Rectangle bounds;
 	
 	private Pixel[][] grid;
@@ -28,13 +32,10 @@ public class Asset {
 		this.grid = grid;
 		this.primaryColor = primaryColor;
 		this.secondaryColor = secondaryColor;
-		
-		getImg();
-		calculateBounds();
 	}
 	
 	private void calculateBounds() {
-		bounds = new Rectangle(img.getWidth() -1, img.getHeight() -1);
+		bounds = new Rectangle(this.getImg().getWidth() -1, this.getImg().getHeight() -1);
 	}
 	
 	public BufferedImage getImg() {
@@ -55,6 +56,9 @@ public class Asset {
 	}	
 
 	public Rectangle getBounds() {
+		if (bounds == null) {
+			calculateBounds();
+		}
 		return bounds;
 	}
 

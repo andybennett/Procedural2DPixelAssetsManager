@@ -16,6 +16,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.JSeparator;
 
 import enums.AssetSize;
 import ajb.app.App;
@@ -25,6 +26,8 @@ import ajb.enums.AssetType;
 import ajb.factory.AsteroidGeneratorFactory;
 import ajb.framework.Base2DFramework;
 import ajb.utils.ColorUtils;
+import ajb.utils.ImageUtils;
+import ajb.utils.XStreamUtils;
 
 public class AsteroidsPanel extends Base2DFramework implements ActionListener {
 
@@ -40,7 +43,7 @@ public class AsteroidsPanel extends Base2DFramework implements ActionListener {
 		super.allowDrag = false;
 		
 		this.app = app;
-		createAssets(100);
+		createAssets(20);
 	}
 	
 	private void createAssets(int amount) {
@@ -107,6 +110,8 @@ public class AsteroidsPanel extends Base2DFramework implements ActionListener {
 	public void mouseClicked(MouseEvent e) {
 		super.mouseClicked(e);
 
+		selectedAsset = null;
+		
 		for (Asset asset : assets) {
 			try {
 				if (asset.getBounds().contains(this.transformPoint(e.getPoint()))) {
@@ -131,8 +136,22 @@ public class AsteroidsPanel extends Base2DFramework implements ActionListener {
 
 			JMenuItem item = new JMenuItem("Regenerate");
 			item.addActionListener(this);
+			
+			menu.add(item);									
+			
+			if (selectedAsset != null) {
+				JSeparator separator = new JSeparator();
+				menu.add(separator);
+				
+				JMenuItem save = new JMenuItem("Save as PNG");
+				save.addActionListener(this);
+				menu.add(save);
+				
+				JMenuItem saveXML = new JMenuItem("Save as XML");
+				saveXML.addActionListener(this);
+				menu.add(saveXML);				
+			}
 
-			menu.add(item);
 			menu.show(this, e.getX(), e.getY());
 
 		}
@@ -141,8 +160,13 @@ public class AsteroidsPanel extends Base2DFramework implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("Regenerate")) {
-			createAssets(100);
+			createAssets(20);
 			repaint();
+		} else if (e.getActionCommand().equals("Save as PNG")) {
+			ImageUtils.save(ImageUtils.createImage(selectedAsset.getGrid(), selectedAsset.getPrimaryColor(), selectedAsset.getSecondaryColor()), "png", selectedAsset.getUuid() + "_RAW");
+			ImageUtils.save(selectedAsset.getImg(), "png", selectedAsset.getUuid());
+		} else if (e.getActionCommand().equals("Save as XML")) {
+			XStreamUtils.outputAsset(selectedAsset);
 		}
 	}	
 }

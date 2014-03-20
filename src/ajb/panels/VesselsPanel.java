@@ -27,6 +27,7 @@ import ajb.factory.VesselGeneratorFactory;
 import ajb.framework.Base2DFramework;
 import ajb.utils.ColorUtils;
 import ajb.utils.ImageUtils;
+import ajb.utils.XStreamUtils;
 
 public class VesselsPanel extends Base2DFramework implements ActionListener {
 
@@ -34,7 +35,7 @@ public class VesselsPanel extends Base2DFramework implements ActionListener {
 
 	VesselGeneratorFactory factory = new VesselGeneratorFactory();
 	List<Asset> assets = new ArrayList<Asset>();
-	
+
 	Asset selectedAsset = null;
 
 	public VesselsPanel(App app) {
@@ -42,7 +43,7 @@ public class VesselsPanel extends Base2DFramework implements ActionListener {
 		super.allowDrag = false;
 
 		this.app = app;
-		createAssets(200);
+		createAssets(100);
 	}
 
 	private void createAssets(int amount) {
@@ -110,41 +111,46 @@ public class VesselsPanel extends Base2DFramework implements ActionListener {
 		super.mouseClicked(e);
 
 		selectedAsset = null;
-		
+
 		for (Asset asset : assets) {
 			try {
 				if (asset.getBounds().contains(this.transformPoint(e.getPoint()))) {
-					selectedAsset = asset;					
+					selectedAsset = asset;
 					break;
 				}
 			} catch (NoninvertibleTransformException e1) {
 				e1.printStackTrace();
 			}
-		}		
-		
+		}
+
 		if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2) {
-			
+
 			if (selectedAsset != null) {
 				app.showDesignerFrame(selectedAsset, this);
 			}
-			
+
 		} else if (e.getButton() == MouseEvent.BUTTON3) {
 
 			JPopupMenu menu = new JPopupMenu();
-			menu.setFont(app.font);			
+			menu.setFont(app.font);
 
 			JMenuItem item = new JMenuItem("Regenerate");
 			item.addActionListener(this);
-			
+
 			menu.add(item);
-									
-			JSeparator separator = new JSeparator();
-			menu.add(separator);
-			
+
 			if (selectedAsset != null) {
+
+				JSeparator separator = new JSeparator();
+				menu.add(separator);
+
 				JMenuItem save = new JMenuItem("Save as PNG");
 				save.addActionListener(this);
 				menu.add(save);
+				
+				JMenuItem saveXML = new JMenuItem("Save as XML");
+				saveXML.addActionListener(this);
+				menu.add(saveXML);				
 			}
 
 			menu.show(this, e.getX(), e.getY());
@@ -155,10 +161,13 @@ public class VesselsPanel extends Base2DFramework implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("Regenerate")) {
-			createAssets(200);
+			createAssets(100);
 			repaint();
 		} else if (e.getActionCommand().equals("Save as PNG")) {
+			ImageUtils.save(ImageUtils.createImage(selectedAsset.getGrid(), selectedAsset.getPrimaryColor(), selectedAsset.getSecondaryColor()), "png", selectedAsset.getUuid() + "_RAW");
 			ImageUtils.save(selectedAsset.getImg(), "png", selectedAsset.getUuid());
+		} else if (e.getActionCommand().equals("Save as XML")) {
+			XStreamUtils.outputAsset(selectedAsset);
 		}
 	}
 
