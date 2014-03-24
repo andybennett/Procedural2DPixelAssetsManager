@@ -54,7 +54,7 @@ public class StationsPanel extends Base2DFramework implements ActionListener {
 
 			Pixel[][] grid = factory.create(AssetSize.RANDOM);
 
-			Asset asset = new Asset(null, AssetType.VESSEL, grid, primaryColor, Color.decode(ColorUtils.getRandomColour()));
+			Asset asset = new Asset(null, AssetType.STATION, grid, primaryColor, Color.decode(ColorUtils.getRandomColour()));
 
 			// add asset to list
 			assets.add(asset);
